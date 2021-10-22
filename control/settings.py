@@ -1,4 +1,5 @@
 import os
+import psycopg2
 
 from pathlib import Path
 
@@ -28,6 +29,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "apps",
+    "registration",
 ]
 
 MIDDLEWARE = [
@@ -45,7 +47,7 @@ ROOT_URLCONF = "control.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [os.path.join(BASE_DIR, "templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -66,8 +68,12 @@ WSGI_APPLICATION = "control.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": "controller",
+        "USER": "postgres",
+        "PASSWORD": "password",
+        "HOST": "localhost",
+        "PORT": "5432",
     }
 }
 
