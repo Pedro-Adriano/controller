@@ -3,9 +3,8 @@ from django.views.decorators.csrf import csrf_protect, csrf_exempt
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 
-from registration.forms import UserForm
 from registration.models import UserModel
-from registration.validation import ValidatorCPF
+from registration.validate import ValidatorCPF
 
 
 def login_user(request):
@@ -14,9 +13,11 @@ def login_user(request):
 
 @csrf_protect
 def submit_login(request):
+
     if request.POST:
         username = request.POST.get("username")
         password = request.POST.get("password")
+
         user = UserModel.objects.filter(cpf=username, password=password)
 
         if user:
@@ -37,8 +38,13 @@ def user_register(request):
     email = request.POST.get("E-mail")
 
     check_user = UserModel.objects.filter(cpf=username)
+    validator = ValidatorCPF(username)
+    cpf_is_valid = validator.check_cpf_is_valid()
 
-    if check_user:
+    if not cpf_is_valid:
+        messages.error(request, "CPF inválido. Favor adicione um CPF válido")
+
+    elif check_user:
         messages.error(request, "CPF já em uso")
 
     elif password and username and email:
