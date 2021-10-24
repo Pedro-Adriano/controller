@@ -21,7 +21,7 @@ def submit_login(request):
         user = UserModel.objects.filter(cpf=username, password=password)
 
         if user:
-            return redirect("/login/#")
+            return redirect("/bill_to_pay/")
         else:
             messages.error(request, "Usuário ou senha inválido. Favor tentar novamente")
     return redirect("/login/")
