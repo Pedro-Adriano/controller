@@ -24,6 +24,7 @@ def submit_login(request):
             return redirect("/bill_to_pay/")
         else:
             messages.error(request, "Usuário ou senha inválido. Favor tentar novamente")
+
     return redirect("/login/")
 
 
