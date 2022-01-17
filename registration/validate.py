@@ -10,10 +10,7 @@ class ValidatorCPF(object):
             rest = self.first_cpf_sum(cpf)
             new_cpf = self.second_cpf_sum(rest, cpf)
 
-            if new_cpf == old_cpf:
-                return True
-
-        return False
+            return bool(new_cpf == old_cpf)
 
     def get_cpf_in_list(self, old_cpf):
         cpf_list = [
